@@ -1,65 +1,62 @@
 const console = require('./console');
-
-
-// Inject the page-realm agent as early as possible (document_start). The agent must override
-// window.JSON.parse BEFORE the Netflix player decrypts & parses its manifest. Otherwise we
-// miss the manifest, and the subtitle list stays empty.
-(() => {
-  const scriptsToInject = ['nflxmultisubs.min.js'];
-  scriptsToInject.forEach(scriptName => {
-    const scriptElem = document.createElement('script');
-    scriptElem.setAttribute('type', 'text/javascript');
-    scriptElem.setAttribute('src', chrome.runtime.getURL(scriptName));
-    scriptElem.setAttribute('id', chrome.runtime.id);
-    // documentElement always exists at document_start; head/body may not yet.
-    (document.head || document.documentElement).appendChild(scriptElem);
-    console.log(`Injected: ${scriptName}`);
-  });
-})();
-
-
-// Firefox: the target website (our injected agent) cannot connect to extensions
-// directly, thus we need to relay the connection in this content script.
-let gMsgPort;
-window.addEventListener('message', evt => {
-  if (!evt.data || evt.data.namespace !== 'nflxmultisubs') return;
-
-  if (evt.data.action === 'connect') {
-    if (!gMsgPort) {
-      gMsgPort = browser.runtime.connect(browser.runtime.id);
-      gMsgPort.onMessage.addListener(msg => {
-        if (msg.settings) {
-          window.postMessage({
-            namespace: 'nflxmultisubs',
-            action: 'apply-settings',
-            settings: msg.settings,
-          }, '*');
-        }
-      });
-    }
+const runtime = (typeof browser !== 'undefined' ? browser : chrome).runtime;
+let port;
+let ready = false;
+let pending = [];
+let reconnectTimer;
+const sendPage = message => window.postMessage({ namespace: 'nflxmultisubs', ...message }, location.origin);
+function connect() {
+  if (port) return;
+  try {
+    port = runtime.connect({ name: 'page-relay' });
+    port.onMessage.addListener(message => {
+      if (!message.settings) return;
+      ready = true;
+      sendPage({ action: 'apply-settings', settings: message.settings });
+      for (const item of pending.splice(0)) port.postMessage(item);
+    });
+    port.onDisconnect.addListener(() => {
+      port = null;
+      ready = false;
+      clearTimeout(reconnectTimer);
+      reconnectTimer = setTimeout(connect, 1000);
+    });
+  } catch { console.warn('RELAY_CONNECT_FAILED'); }
+}
+// Register before starting the page script, so its first handshake cannot be lost.
+window.addEventListener('message', event => {
+  if (event.source !== window || event.origin !== location.origin ||
+      event.data?.namespace !== 'nflxmultisubs') return;
+  const { action, settings } = event.data;
+  if (action === 'connect') { connect(); return; }
+  let message;
+  if (action === 'update-settings' && settings && typeof settings === 'object') message = { settings };
+  if (action === 'startPlayback') message = { startPlayback: 1 };
+  if (action === 'stopPlayback') message = { stopPlayback: 1 };
+  if (!message) return;
+  connect();
+  if (ready && port) port.postMessage(message);
+  else { pending.push(message); pending = pending.slice(-20); }
+});
+console.log('CONTENT_READY', document.readyState);
+if (BROWSER === 'safari') {
+  // Safari 18+: declarative MAIN-world document_start injection in the manifest.
+  // There is no script-tag resource load, inline script, eval, or CSP relaxation.
+  connect();
+} else {
+  const inject = () => {
+    const parent = document.head || document.documentElement;
+    if (!parent) return false;
+    const script = document.createElement('script');
+    script.src = runtime.getURL('nflxmultisubs.min.js');
+    script.id = runtime.id;
+    script.onload = () => script.remove();
+    script.onerror = () => console.error('PAGE_SCRIPT_LOAD_FAILED');
+    parent.appendChild(script);
+    return true;
+  };
+  if (!inject()) {
+    const observer = new MutationObserver(() => { if (inject()) observer.disconnect(); });
+    observer.observe(document, { childList: true, subtree: true });
   }
-  else if (evt.data.action === 'disconnect') {
-    if (gMsgPort) {
-      gMsgPort.disconnect();
-      gMsgPort = null;
-      gMsgPort.disconnect();
-    }
-  }
-  else if (evt.data.action === 'update-settings') {
-    if (gMsgPort) {
-      if (evt.data.settings) {
-        gMsgPort.postMessage({ settings: evt.data.settings });
-      }
-    }
-  }
-  else if (evt.data.action === 'startPlayback') {
-    if (gMsgPort) {
-      gMsgPort.postMessage({ startPlayback: 1 });
-    }
-  }
-  else if (evt.data.action === 'stopPlayback') {
-    if (gMsgPort) {
-      gMsgPort.postMessage({ stopPlayback: 1 });
-    }
-  }
-}, false);
+}

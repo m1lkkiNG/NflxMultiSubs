@@ -2,19 +2,22 @@
   "name": "NflxMultiSubs",
   "description": "Bilingual Subtitles for Netflix (fixed)",
   "author": "Dan Chen, Gert Mertes",
-  "version": "3.0.3",
+  "version": "3.0.3-LOCAL.2",
   "license": "MIT",
   "private": true,
   "scripts": {
     "build": "node utils/build.js",
     "build-debug": "cross-env DISABLE_MINI=1 node utils/build.js",
-    "pack": "node utils/pack.js"
+    "pack": "node utils/pack.js",
+    "test": "node --test test/*.test.js",
+    "sync-safari": "node utils/sync-safari.js"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^14.0.0",
     "cross-env": "^7.0.3",
     "fs-extra": "^10.0.0",
+    "jsdom": "^26.1.0",
     "jszip": "^3.7.1",
     "vanilla-picker": "^2.12.1",
     "webpack": "^5.61.0"

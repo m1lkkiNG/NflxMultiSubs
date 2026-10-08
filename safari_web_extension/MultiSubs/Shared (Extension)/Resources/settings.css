@@ -1,0 +1,278 @@
+/* FIXME: refactor this stylesheet with Sass */
+
+html, body {
+  background: hsl(0, 0%, 97%);
+  font-size: 12px;
+  font-family: "Helvetica Neue", Arial, "Microsoft Jhenghei", sans-serif;
+  margin: 0;
+  min-width: 300px;
+  min-height: 460px;
+  padding: 0;
+  outline: 0;
+  user-select: none;
+  overflow: hidden;
+}
+
+.wrapper {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+}
+
+p {
+  line-height: 1;
+  margin: 0;
+}
+
+hr {
+  display: block;
+  height: 0;
+  border: 0;
+  border-top: 1px solid hsl(0, 0%, 90%);
+  border-bottom: 1px solid hsl(0, 0%, 100%);
+  margin: 10px 0;
+  padding: 0;
+}
+
+h1 {
+  color: #db3b26;
+  font-weight: bolder;
+  font-size: 20px;
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+
+section {
+  margin: 5px 0;
+}
+
+section p{
+  margin: 3px 0px;
+}
+section h2 {
+  color: hsl(0, 0%, 40%);
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  padding: 8px 0;
+  background: hsl(0, 0%, 95%);
+}
+
+a {
+  color: hsl(10, 80%, 38%);
+  font-weight: bold;
+  outline: 0;
+  transition: color .33s;
+  text-decoration: none;
+}
+
+a:hover{
+  color: hsl(10, 80%, 50%);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.pro-link {
+  color: hsl(0, 0%, 60%);
+  text-decoration: none;
+  transition: all 1s;
+  filter: blur(6px) grayscale(100%);
+}
+
+.pro-link:hover {
+  cursor: not-allowed;
+  filter: blur(0);
+}
+
+footer {
+  color: hsl(0, 0%, 50%);
+  margin-bottom: 10px;
+}
+
+.settings-secondary-lang {
+  transition: all 1s;
+}
+
+.settings-layout div,
+.settings-secondary-lang div {
+  color: hsl(0, 0%, 30%);
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.settings-layout div+div,
+.settings-secondary-lang div+div {
+  margin-left: 20px;
+}
+
+.settings-layout div:hover,
+.settings-layout div.active,
+.settings-secondary-lang div:hover,
+.settings-secondary-lang div.active
+
+{
+  color: hsl(0, 70%, 50%);
+  cursor: pointer;
+}
+
+.settings-layout svg,
+.settings-secondary-lang svg {
+  width: 60px;
+}
+
+.settings-layout svg:hover rect,
+.settings-layout div.active svg rect,
+.settings-secondary-lang svg:hover rect,
+.settings-secondary-lang div.active svg rect
+{
+  stroke: hsl(0, 70%, 50%);
+}
+
+.settings-layout svg:hover line,
+.settings-layout div.active svg line,
+.settings-secondary-lang svg:hover line,
+.settings-secondary-lang div.active svg line
+{
+  stroke: hsl(0, 80%, 50%);
+}
+
+.font-size {
+  position: relative;
+  height: 25px;
+  width: 25px;
+  border: 2px solid hsl(0, 0%, 70%);
+  color: hsl(0, 0%, 30%);
+  background-color: hsl(0, 0%, 98%);
+  border-radius: 25px;
+  font-size: 25px;
+  font-weight: normal;
+  align-items: stretch;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.font-size-indicator {
+  height: 35px;
+  width: 35px;
+  border: 1px solid hsl(0, 0%, 70%);
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 10px;
+}
+.font-size + .font-size {
+  margin-left: 7px;
+}
+
+.action:hover{
+  border-color: hsl(0, 70%, 50%);
+  color: hsl(0, 70%, 50%);
+  cursor: pointer;
+}
+.action:active {
+  border-color: hsl(0, 84%, 80%);
+  color: hsl(0, 91%, 86%);
+}
+
+.settings-secondary-lang div span {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 2px;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.settings-secondary-lang div span::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #555 transparent;
+}
+
+.settings-secondary-lang div:hover span{
+  visibility: visible;
+  opacity: 1;
+}
+
+.settings-secondary-lang #langcode{
+  position: absolute;
+  width: 100%;
+  top: 20%;
+  pointer-events: none;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip span {
+  visibility: hidden;
+  width: 170px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: absolute;
+  z-index: 1;
+  bottom: 165%;
+  left: 50%;
+  margin-left: -88px;
+}
+
+.tooltip:hover span {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip span::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #5e5e5e transparent transparent transparent;
+}
+
+#primary-color-ff .picker_wrapper {
+  width: 230px;
+  left: -100px;
+  margin-top: 5px;
+}
+
+#secondary-color-ff .picker_wrapper {
+  width: 230px;
+  left: -100px;
+  margin-bottom: 60px;
+}
+
+#primary-color-ff .picker_arrow,
+#secondary-color-ff .picker_arrow {
+  visibility: hidden;
+}
+
+#primary-color-ff .picker_wrapper.popup,
+#secondary-color-ff .picker_wrapper.popup {
+  box-shadow: 0 0 10px 1px rgb(0 0 0 / 80%);
+}

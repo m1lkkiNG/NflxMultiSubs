@@ -1,0 +1,43 @@
+{
+  "scope": "Safari live session before LOCAL.2 spacing correction; only sanitized diagnostic values",
+  "version": "3.0.3",
+  "counts": {
+    "PAGE_HOOK_READY": 1,
+    "SETTINGS_RECEIVED": 2,
+    "MANIFEST_CAPTURED": 3,
+    "TRACKS_BUILT": 1,
+    "SUBTITLE_LOADING": 1,
+    "SUBTITLE_READY": 1,
+    "SUBTITLE_RENDERED": 1,
+    "MENU_RENDERED": 2
+  },
+  "manifestTrackCount": 44,
+  "downloadableLanguageCount": 4,
+  "menuItemCountIncludingOff": 5,
+  "parsedCueCount": 371,
+  "video": {
+    "width": 3840,
+    "height": 2160,
+    "paused": false,
+    "readyState": 4,
+    "playbackRate": 1
+  },
+  "subtitles": {
+    "total": 32,
+    "active": "READY",
+    "overlayConnected": true
+  },
+  "visibleLanguageOptions": [
+    "中文（簡體）",
+    "中文（繁體）",
+    "英語",
+    "英語 [CC]",
+    "Off"
+  ],
+  "hdrVerified": false,
+  "userReported": {
+    "blackVideoDuringRemoteControl": true,
+    "subtitleGapTooSmall": true
+  },
+  "spacingCorrection": "LOCAL.2; built and unit-tested; user visual confirmation pending"
+}
