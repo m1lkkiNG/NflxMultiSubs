@@ -1003,7 +1003,7 @@ class RendererLoop {
       Math.max(...primaryRects.map(r => r.bottom)),
       Math.min(...secondaryRects.map(r => r.top)),
       Math.max(...secondaryRects.map(r => r.bottom)),
-      video.bottom, Math.max(12, Math.round(video.height * 0.025))
+      video.bottom, 4
     );
     this.gapPrimary = primary;
     primary.style.translate = `0 ${offsets.primary}px`;

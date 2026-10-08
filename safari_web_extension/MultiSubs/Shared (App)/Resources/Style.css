@@ -7,7 +7,7 @@
 :root {
     color-scheme: light dark;
 
-    --spacing: 20px;
+    --spacing: 8px;
 }
 
 html {
@@ -22,7 +22,9 @@ body {
 
     gap: var(--spacing);
     margin: 0 calc(var(--spacing) * 2);
-    height: 100%;
+    min-height: 100%;
+    padding: 12px 0;
+    box-sizing: border-box;
 
     font: -apple-system-short-body;
     text-align: center;

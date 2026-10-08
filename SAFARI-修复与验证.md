@@ -1,6 +1,6 @@
 # NflxMultiSubs Safari 本地修复版
 
-本地测试版 3.0.3-LOCAL.2，2026-10-08。最低使用 Safari 18（本机 Safari 27.0.1）。未上架，未公证，使用独立 bundle ID `local.nflxmultisubs.safari.repair`，不继承原作者的签名或设置存储。
+本地测试版 3.0.3-LOCAL.3，2026-10-08。最低使用 Safari 18（本机 Safari 27.0.1）。未上架，未公证，使用独立 bundle ID `local.nflxmultisubs.safari.repair`，不继承原作者的签名或设置存储。
 
 ## 基线与核查
 
@@ -57,15 +57,19 @@ Safari 使用 manifest 中的 `world: MAIN` 和 `document_start` 直接执行核
 
 ## 安装、启用与恢复旧版
 
-本机已安装到用户 `Applications/NflxMultiSubs Safari Local.app`。已清理本任务生成的重复 App 副本，只保留用户 Applications 的安装及 ZIP 交付；Safari 若仍暂时显示重复条目，只启用一个，重新打开 Safari 后再检查。
+推荐使用新交付的 `NflxMultiSubs-LOCAL3-安装包.zip`，不要直接打开其中的 payload.zip。启动 App 显示的网页是正常的设置引导，不是播放器。旧版按钮没有显示系统错误，新版会显示错误码。
 
-1. 解压交付的 `NflxMultiSubs-Safari-Local.zip`，将 `NflxMultiSubs Safari Local.app` 放入本地“应用程序”并打开一次。
-2. Safari → 设置 → 高级 → 显示网页开发者功能；设置 → 开发者 → 允许未签名的扩展。按系统提示使用触控 ID/Mac 密码认证。
-3. Safari → 设置 → 扩展 → 启用 **NflxMultiSubs Safari Local**，只允许 netflix.com。若旧版仍启用，先取消旧版勾选，避免重复 Hook。
-4. 完全刷新已打开的 Netflix 页面；首次授予网站权限之后必须刷新，才能重新从 document_start 注入。
-5. 由用户登录和开始播放。原字幕在 Netflix 菜单选择；第二字幕在 Secondary Subtitles 选择。扩展工具栏按钮可设置大小、位置、颜色和语言记忆。
+1. 退出 Safari 和本地测试 App。解压安装包，进入文件夹，双击 `安装或修复.command`，按回车继续。
+2. 安装入口验证包、备份已有同 ID 本地版，安装到 `~/Applications/NflxMultiSubs Safari Local.app` 并向系统注册；会注销本任务已知临时构建副本。不会修改 Aurora 旧版或 Safari 安全选项。
+3. 打开 Safari → 设置 → 高级 → 显示网页开发者功能；设置 → 开发者 → 允许未签名的扩展。按系统提示使用触控 ID/Mac 密码认证。
+4. Safari → 设置 → 扩展 → 启用一个 **NflxMultiSubs Safari Local**，只允许 netflix.com。若旧版仍启用，取消旧版勾选，避免重复 Hook。
+5. 刷新 Netflix，由用户登录和开始播放。原字幕在 Netflix 菜单选择；第二字幕在 Secondary Subtitles 选择。工具栏按钮可调整字幕设置。
 
-Safari 重启后可能需要重新允许未签名扩展。需要稳定日用分发时可由用户自己的开发者身份签名；本交付不冒用第三方签名。
+Safari 每次退出都会重置“允许未签名的扩展”，下次启动需要重新开启，不必重装。来源：[Apple 开发文档](https://developer.apple.com/documentation/safariservices/building-a-safari-app-extension)。开启后若列表尚未刷新，关闭并重新打开设置窗口，不要立即反复退出 Safari。若仍缺少扩展，反馈安装终端的注册结果或引导页错误码。
+
+之前的两个本地测试条目来自不同位置的同一应用副本注册，不是分别负责主字幕和副字幕。另有 Downloads 中的 Aurora 3.0.2 旧版，未修改。重启后消失可由未签名开关重置解释；再次允许后仍缺失的原因尚未确认，不能把两者混为一谈。
+
+安装入口备份位置：`~/Library/Application Support/NflxMultiSubs Safari Local/Backups/`。需要稳定日用分发时可由用户自己的开发者身份签名；本交付不冒用第三方签名。
 
 恢复：取消本地测试版的勾选，重新启用旧版并刷新 Netflix。可关闭“允许未签名的扩展”和“显示网页开发者功能”，删除本地测试 App。旧 App 和旧版的设置存储没有被覆盖。该测试版新设置保存在其独立扩展存储中。
 
@@ -109,8 +113,8 @@ JSON.stringify(window.__NflxMultiSubsDiagnostics?.() ?? {status: 'PAGE_CORE_MISS
 
 最新本机执行结果见同目录 `VALIDATION.md`。
 
-## 本次后续操作
+## LOCAL.3 后续验证
 
-远程控制会话已结束。间距修订后的 App 已覆盖**本地测试版自己的安装**，没有改动第三方旧版。请在 Safari 设置 → 扩展，把 NflxMultiSubs Safari Local 取消勾选后再勾选，刷新 Netflix。若仍运行旧脚本，可退出并重开 Safari，按需重新允许未签名扩展。诊断版本应为 `3.0.3-LOCAL.2`。
+用户已确认结束控制后画面正常、可选主副字幕；LOCAL.2 间距偏大。LOCAL.3 改为实际字幕块之间约 4 CSS px，并在底部空间不足时调整位置。保留 gmertes 的叠加渲染方案及字体设置，不改动播放器或 DRM。
 
-若停止控制并重开 Safari 后仍黑屏，再关闭本扩展进行同片源对照并反馈。先前控制期间的黑屏尚无单一原因结论。
+LOCAL.3 已完成构建、16 项测试及安装包校验，尚待用户执行安装入口并目视确认间距。诊断版本应为 `3.0.3-LOCAL.3`。本次没有重新远程控制 Netflix。

@@ -15,3 +15,7 @@ function openPreferences() {
 }
 
 document.querySelector("button.open-preferences").addEventListener("click", openPreferences);
+
+function showSetupError(message) {
+    document.getElementById('setup-error').textContent = message;
+}

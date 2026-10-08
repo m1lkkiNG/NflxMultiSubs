@@ -44,7 +44,9 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
 
         SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
             guard let state = state, error == nil else {
-                // Insert code to inform the user that something went wrong.
+                DispatchQueue.main.async {
+                    self.showSetupError(error)
+                }
                 return
             }
 
@@ -62,16 +64,21 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         }
 
         SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { error in
-            guard error == nil else {
-                // Insert code to inform the user that something went wrong.
-                return
-            }
-
-            DispatchQueue.main.async {
-                NSApplication.shared.terminate(nil)
+            if let error = error {
+                DispatchQueue.main.async { self.showSetupError(error) }
             }
         }
 #endif
+    }
+
+    private func showSetupError(_ error: Error?) {
+        let nsError = error as NSError?
+        let code = nsError.map { "\($0.domain) (\($0.code))" } ?? "Extension not registered"
+        let message = "Safari 尚未识别此扩展。请先运行安装包中的“安装或修复.command”，再在 Safari 设置中允许未签名扩展并启用。错误：" + code
+        if let data = try? JSONSerialization.data(withJSONObject: [message]),
+           let json = String(data: data, encoding: .utf8) {
+            webView.evaluateJavaScript("showSetupError(\(json)[0])")
+        }
     }
 
 }

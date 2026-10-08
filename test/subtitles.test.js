@@ -171,7 +171,7 @@ test('Safari background accepts content connections without onConnectExternal; s
 test('subtitle spacing uses actual bounds and keeps multiline secondary inside the viewport', () => {
   assert.deepEqual(utils.subtitleOffsets(650,648,678,768,18),{primary:0,secondary:20});
   assert.deepEqual(utils.subtitleOffsets(690,680,742,768,18),{primary:-18,secondary:10});
-  assert.deepEqual(utils.subtitleOffsets(600,650,680,768,18),{primary:0,secondary:0});
+  assert.deepEqual(utils.subtitleOffsets(600,650,680,768,18),{primary:0,secondary:-32});
 });
 test('renderer separates measured primary and secondary rows without accumulating offsets', () => {
   const h=harness();
@@ -184,8 +184,8 @@ test('renderer separates measured primary and secondary rows without accumulatin
     const loop=new h.api.RendererLoop(video);loop._appendSubtitleWrapper();loop.subSvg=loop.subtitleWrapperElem.querySelector('svg');
     const text=doc.createElementNS('http://www.w3.org/2000/svg','text');loop.subSvg.append(text);
     text.getBoundingClientRect=()=>({width:200,height:30,top:648,bottom:678});
-    loop.setRenderDirty();loop._separateSubtitleRows();assert.equal(loop.subSvg.style.translate,'0 31px');
-    loop._separateSubtitleRows();assert.equal(loop.subSvg.style.translate,'0 31px');
+    loop.setRenderDirty();loop._separateSubtitleRows();assert.equal(loop.subSvg.style.translate,'0 16px');
+    loop._separateSubtitleRows();assert.equal(loop.subSvg.style.translate,'0 16px');
     loop.subSvg.replaceChildren();loop._separateSubtitleRows();assert.equal(primary.style.translate,'');
   } finally {h.close();}
 });
@@ -200,4 +200,14 @@ test('replaced player container rebuilds overlay and invalidates cached cue rend
     loop.isRenderDirty=false;loop._appendSubtitleWrapper();
     assert.notEqual(loop.subtitleWrapperElem,previous);assert.ok(loop.subtitleWrapperElem.isConnected);assert.equal(loop.isRenderDirty,true);
   } finally {h.close();}
+});
+
+test('compact gap pulls rows together and stays four CSS pixels on large screens', () => {
+  for (const top of [620, 650, 720, 850]) {
+    const offsets = utils.subtitleOffsets(640, top, top + 30, 1080, 4);
+    assert.equal(top + offsets.secondary - (640 + offsets.primary), 4);
+  }
+  const offsets = utils.subtitleOffsets(700, 745, 790, 768, 4);
+  assert.equal(745 + offsets.secondary - (700 + offsets.primary), 4);
+  assert.ok(790 + offsets.secondary <= 752);
 });

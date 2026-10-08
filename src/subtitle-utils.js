@@ -31,10 +31,10 @@ async function downloadWithFallback(urls, extract, request = fetch, report = () 
   }
   throw new Error('SUBTITLE_DOWNLOAD_OR_PARSE_FAILED');
 }
-// Keep a real pixel gap, then use space above the primary row if the lower edge is tight.
+// Place rows at the requested pixel gap; also close an excessive upstream gap.
 function subtitleOffsets(primaryBottom, secondaryTop, secondaryBottom, videoBottom, gap, safe = 16) {
-  const needed = Math.max(0, primaryBottom + gap - secondaryTop);
-  const down = Math.min(needed, Math.max(0, videoBottom - safe - secondaryBottom));
+  const needed = primaryBottom + gap - secondaryTop;
+  const down = Math.min(needed, videoBottom - safe - secondaryBottom);
   return { primary: down - needed, secondary: down };
 }
 module.exports = { getDownloadables, getTrackId, getTextTracks, getUrls, ttmlTime, downloadWithFallback, subtitleOffsets };
