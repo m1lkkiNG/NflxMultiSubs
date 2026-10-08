@@ -1,8 +1,9 @@
 name: Build and publish
 
 on:
-  release:
-    types: [ created ]
+  # Fork safety: never upload a Safari release to upstream Chrome/Firefox IDs.
+  # Manual use still requires replacing those IDs and supplying your own secrets.
+  workflow_dispatch:
 
 jobs:
   publish:
