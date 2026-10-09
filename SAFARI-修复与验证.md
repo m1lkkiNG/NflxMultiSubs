@@ -1,3 +1,5 @@
+> 2026-10-09 更新：当前版本为 3.0.3-safari.4，App 与扩展显示名已恢复为 **NflxMultiSubs**，构建输出为 `NflxMultiSubs.app`。保留原测试 Bundle ID 以延续已有设置；它不表示已获得正式签名。安装入口会备份并迁移同 ID 的旧名称 App。下文 LOCAL.2/LOCAL.3 为历史验证记录。
+
 # NflxMultiSubs Safari 本地修复版
 
 本地测试版 3.0.3-LOCAL.3，2026-10-08。最低使用 Safari 18（本机 Safari 27.0.1）。未上架，未公证，使用独立 bundle ID `local.nflxmultisubs.safari.repair`，不继承原作者的签名或设置存储。

@@ -485,12 +485,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/MultiSubs.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 20261008.3;
+				CURRENT_PROJECT_VERSION = 20261009.4;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs Safari Local";
+				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -518,12 +518,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/MultiSubs.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 20261008.3;
+				CURRENT_PROJECT_VERSION = 20261009.4;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs Safari Local";
+				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -554,12 +554,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/MultiSubs.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 20261008.3;
+				CURRENT_PROJECT_VERSION = 20261009.4;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs Safari Local";
+				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -576,7 +576,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = local.nflxmultisubs.safari.repair;
-				PRODUCT_NAME = "NflxMultiSubs Safari Local";
+				PRODUCT_NAME = "NflxMultiSubs";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -592,12 +592,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/MultiSubs.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 20261008.3;
+				CURRENT_PROJECT_VERSION = 20261009.4;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs Safari Local";
+				INFOPLIST_KEY_CFBundleDisplayName = "NflxMultiSubs";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -614,7 +614,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = local.nflxmultisubs.safari.repair;
-				PRODUCT_NAME = "NflxMultiSubs Safari Local";
+				PRODUCT_NAME = "NflxMultiSubs";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

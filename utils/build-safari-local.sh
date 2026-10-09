@@ -11,6 +11,6 @@ xcodebuild -project safari_web_extension/MultiSubs/NflxMultiSubs.xcodeproj \
   -scheme 'NflxMultiSubs (macOS)' -configuration Debug \
   -derivedDataPath "$derived_dir" CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_STYLE=Manual build
 mkdir -p dist
-ditto --norsrc "$derived_dir/Build/Products/Debug/NflxMultiSubs Safari Local.app" 'dist/NflxMultiSubs Safari Local.app'
-codesign --verify --deep --strict 'dist/NflxMultiSubs Safari Local.app'
-printf '%s\n' 'Built: dist/NflxMultiSubs Safari Local.app (local ad-hoc signature; not notarized)'
+ditto --norsrc "$derived_dir/Build/Products/Debug/NflxMultiSubs.app" 'dist/NflxMultiSubs.app'
+codesign --verify --deep --strict 'dist/NflxMultiSubs.app'
+printf '%s\n' 'Built: dist/NflxMultiSubs.app (local ad-hoc signature; not notarized)'

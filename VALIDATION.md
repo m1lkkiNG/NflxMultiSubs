@@ -22,3 +22,10 @@
 限制：jsdom 不是 Safari/WebKit，模拟测试不能验证 FairPlay、真实网络 CORS/CSP、GPU/视频画质和视觉布局。编译通过不等于 Netflix 端到端通过。
 
 安全摘要见 `SAFARI-LIVE-EVIDENCE.json`。最新交付版本为 3.0.3-LOCAL.3（Safari manifest 3.0.3.3，原生 build 20261008.3）。
+
+## 2026-10-09 名称恢复
+
+- App、Safari manifest、主 App/扩展的 CFBundleDisplayName 和启动页统一恢复为 NflxMultiSubs。版本 3.0.3-safari.4 / Safari 3.0.3.4 / native build 20261009.4。
+- 保留测试 Bundle ID 和已有设置身份；旧名称只用于安装迁移及历史记录。没有因此获得正式签名。
+- 16 项测试、Chrome/Firefox/Safari webpack 及 Xcode Debug 构建通过；临时目录中的 App 签名完整性通过，主 App 和扩展显示名、打包 manifest 名称/版本已逐项核对。
+- 本次未替换正在使用的 App，也未再次控制 Netflix；当前代码保持此前用户确认正常的 4px 字幕间距。

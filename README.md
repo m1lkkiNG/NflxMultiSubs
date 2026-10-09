@@ -1,3 +1,5 @@
+> **Safari fork:** This branch includes the Netflix compatibility, Safari injection/messaging, error handling and compact subtitle spacing fixes. The app and Safari extension are named **NflxMultiSubs**. Builds currently use a local ad-hoc signature; Developer ID signing and notarization remain pending. The store badges below link to upstream products, not this fork. See [Safari build and testing](SAFARI-修复与验证.md) and [distribution preparation](SAFARI-正式发布.md).
+
 <p align="center"><a href="README.md">English</a>, <a href="README_cn.md">中文</a></p>
 
 <img src="docs/icon.png?raw=true" height="48"> NflxMultiSubs

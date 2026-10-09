@@ -61,7 +61,7 @@ git push -u origin release/safari-distribution
 2. 打开 safari_web_extension/MultiSubs/NflxMultiSubs.xcodeproj，选择 NflxMultiSubs (macOS) scheme。
 3. 给 macOS 主 App 和 Extension 两个 target 的 Release 配置设置自己的 Team，移除本地 CODE_SIGN_IDENTITY=-，使用合适的归档/Developer ID 导出签名配置；保留 Hardened Runtime。不要把两个 target 强行设置成同一个 Bundle ID。
 4. 使用自己的固定 App ID，例如 io.github.YOUR_NAME.nflxmultisubs；扩展为该 ID 后加 .Extension。同步修改 Shared (App)/ViewController.swift 中 extensionBundleIdentifier，或改为从主 App ID 推导。发布后保持 ID 和签名团队稳定，避免更新被当作另一个扩展。
-5. 将 LOCAL 名称、启动页的未签名/安装脚本说明改成正式产品名和正常安装说明；指定正式版本号与递增 build。暂不宣称支持低于当前工程的 macOS 15 / Safari 18。
+5. App 与扩展名称已恢复为 NflxMultiSubs。获得正式签名后，将启动页的未签名/安装脚本说明改成正常安装说明，并指定正式版本号与递增 build。暂不宣称支持低于当前工程的 macOS 15 / Safari 18。
 6. npm ci → npm test → npm run build → npm run sync-safari。不要用 utils/build-safari-local.sh 生成正式产物；该脚本特意使用 ad-hoc 签名。
 7. Product → Archive，再用 Organizer 的 Developer ID 分发/公证流程。选择 Release，关闭 Only Active Architecture；若面向 Intel 用户，确认 App 和 appex 都包含 arm64/x86_64。当前交付 LOCAL.3 只验证了本机 arm64。
 8. 导出后检验签名、公证票据和 Gatekeeper，再制作 ZIP/DMG 或有 Developer ID Installer 签名的 PKG。签名后不得再改 JS、manifest、图标或启动页面。

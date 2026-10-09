@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 package_dir="$(cd "$(dirname "$0")" && pwd)"
-app_name='NflxMultiSubs Safari Local.app'
+app_name='NflxMultiSubs.app'
+legacy_name='NflxMultiSubs Safari Local.app'
 app_id='local.nflxmultisubs.safari.repair'
 ext_id="$app_id.Extension"
 check_only="${1:-}"
@@ -14,7 +15,7 @@ finish() {
   if [[ -t 0 && "$check_only" != '--check' ]]; then read -r -p '按回车关闭此窗口…' _reply || true; fi
 }
 trap finish EXIT
-printf 'NflxMultiSubs Safari Local · LOCAL.3\n'
+printf 'NflxMultiSubs · 3.0.3-safari.4\n'
 /usr/bin/ditto -x -k "$package_dir/payload.zip" "$staging"
 source_app="$staging/$app_name"
 source_ext="$source_app/Contents/PlugIns/NflxMultiSubs Extension.appex"
@@ -28,20 +29,35 @@ fi
 printf '\n本程序只安装/更新此本地测试版，不修改原版 NflxMultiSubs 或 Safari 安全设置。\n'
 printf '请先退出 Safari 和本地测试 App，再继续。\n'
 read -r -p '准备好后按回车安装…' _reply
+# Stop before retiring the previous installation if the new name belongs to another app.
+if [[ -e "$destination" ]] && [[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$destination/Contents/Info.plist" 2>/dev/null)" != "$app_id" ]]; then
+  printf '目标位置存在不同应用，已停止。请保留原应用，并先将其移到其他位置后再安装。\n'
+  exit 1
+fi
 # Remove registrations only for known temporary products of this repair, never the original extension.
 for old_root in /private/tmp/nflxmultisubs-local3 /private/tmp/nflxmultisubs-local3-no-registration /private/tmp/nflxmultisubs-safari-20261008; do
-  old_app="$old_root/Build/Products/Debug/$app_name"
+  old_app="$old_root/Build/Products/Debug/$legacy_name"
   if [[ -d "$old_app" ]] && [[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$old_app/Contents/Info.plist" 2>/dev/null)" == "$app_id" ]]; then
     /usr/bin/pluginkit -r "$old_app/Contents/PlugIns/NflxMultiSubs Extension.appex" || true
     /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u "$old_app" || true
   fi
 done
+# Retire only the previous test-name installation with the same bundle ID.
+legacy_app="$HOME/Applications/$legacy_name"
+if [[ -d "$legacy_app" ]] && [[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$legacy_app/Contents/Info.plist" 2>/dev/null)" == "$app_id" ]]; then
+  legacy_backup="$HOME/Library/Application Support/NflxMultiSubs/Backups"
+  mkdir -p "$legacy_backup"
+  /usr/bin/ditto -c -k --norsrc --keepParent "$legacy_app" "$legacy_backup/Previous-name-$(date +%Y%m%d-%H%M%S).zip"
+  /usr/bin/pluginkit -r "$legacy_app/Contents/PlugIns/NflxMultiSubs Extension.appex" || true
+  /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u "$legacy_app" || true
+  rm -rf "$legacy_app"
+fi
 mkdir -p "$HOME/Applications"
 if [[ -e "$destination" ]]; then
   [[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$destination/Contents/Info.plist")" == "$app_id" ]] || { printf '目标位置存在不同应用，已停止。\n'; exit 1; }
-  backup_dir="$HOME/Library/Application Support/NflxMultiSubs Safari Local/Backups"
+  backup_dir="$HOME/Library/Application Support/NflxMultiSubs/Backups"
   mkdir -p "$backup_dir"
-  /usr/bin/ditto -c -k --norsrc --keepParent "$destination" "$backup_dir/Local-$(date +%Y%m%d-%H%M%S).zip"
+  /usr/bin/ditto -c -k --norsrc --keepParent "$destination" "$backup_dir/Backup-$(date +%Y%m%d-%H%M%S).zip"
   /usr/bin/pluginkit -r "$destination/Contents/PlugIns/NflxMultiSubs Extension.appex" || true
   rm -rf "$destination"
 fi
@@ -51,5 +67,5 @@ fi
 /usr/bin/pluginkit -a "$destination/Contents/PlugIns/NflxMultiSubs Extension.appex"
 printf '\n已复制到：%s\n扩展注册结果：\n' "$destination"
 /usr/bin/pluginkit -m -A -v -i "$ext_id"
-printf '\n接下来：\n1. 打开 Safari → 设置 → 开发者 → 允许未签名的扩展，并完成系统认证。\n2. 设置 → 扩展 → 勾选 NflxMultiSubs Safari Local。\n3. 打开 Netflix，允许 netflix.com 访问，刷新页面。\n\nSafari 每次退出后，“允许未签名的扩展”会重置，需要再次开启；不必反复解压安装。\n'
+printf '\n接下来：\n1. 打开 Safari → 设置 → 开发者 → 允许未签名的扩展，并完成系统认证。\n2. 设置 → 扩展 → 勾选 NflxMultiSubs。\n3. 打开 Netflix，允许 netflix.com 访问，刷新页面。\n\nSafari 每次退出后，“允许未签名的扩展”会重置，需要再次开启；不必反复解压安装。\n'
 /usr/bin/open "$destination"

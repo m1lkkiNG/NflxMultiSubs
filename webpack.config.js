@@ -55,7 +55,7 @@ const configs = browsers.map(browser => {
             transform: (content, path) => Buffer.from(JSON.stringify({
               short_name: PACKAGE.name,
               description: PACKAGE.description,
-              version: PACKAGE.version.split('-')[0] + (browser === 'safari' ? '.3' : ''),
+              version: PACKAGE.version.split('-')[0] + (browser === 'safari' ? '.4' : ''),
               ...JSON.parse(content.toString('utf-8'))
             }, null, '\t')),
           },

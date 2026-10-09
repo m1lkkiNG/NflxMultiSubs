@@ -1,3 +1,5 @@
+> **Safari 修复分支：** 已合入新版 Netflix 兼容、Safari 注入与通信、下载错误处理及紧凑字幕间距修复。App 和 Safari 扩展名称统一为 **NflxMultiSubs**。当前构建仍使用本地测试签名，正式签名与公证尚未完成。下方商店链接属于上游版本，并非此 fork 的发布包。请参阅[构建与验证](SAFARI-修复与验证.md)及[正式发布说明](SAFARI-正式发布.md)。
+
 <p align="center"><a href="README.md">English</a>, <a href="README_cn.md">中文</a></p>
 
 
