@@ -45,7 +45,7 @@ Build
 -----
 Requires Node.js. Build directories are `build/chrome` and `build/firefox`.
 ```
-git clone https://github.com/gmertes/NflxMultiSubs.git
+git clone https://github.com/m1lkkiNG/NflxMultiSubs.git
 cd NflxMultiSubs
 npm install
 npm run build

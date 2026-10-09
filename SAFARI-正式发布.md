@@ -1,6 +1,8 @@
 # Safari 正式发布准备
 
-核查日期：2026-10-08。当前是发布准备分支，尚未生成 Developer ID 正式签名/公证产物，尚未推送 GitHub。
+核查日期：2026-10-08。当前是发布准备分支，尚未生成 Developer ID 正式签名/公证产物。
+
+2026-10-09：已建立 [m1lkkiNG/NflxMultiSubs](https://github.com/m1lkkiNG/NflxMultiSubs)，直接 fork 自 gmertes；默认 master 与 release/safari-distribution 分支包含本次 Safari 修复及名称恢复。下方 fork 导入步骤保留供其他开发者参考。
 
 ## 当前状态
 

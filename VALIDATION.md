@@ -29,3 +29,5 @@
 - 保留测试 Bundle ID 和已有设置身份；旧名称只用于安装迁移及历史记录。没有因此获得正式签名。
 - 16 项测试、Chrome/Firefox/Safari webpack 及 Xcode Debug 构建通过；临时目录中的 App 签名完整性通过，主 App 和扩展显示名、打包 manifest 名称/版本已逐项核对。
 - 本次未替换正在使用的 App，也未再次控制 Netflix；当前代码保持此前用户确认正常的 4px 字幕间距。
+
+- GitHub fork：m1lkkiNG/NflxMultiSubs，parent 已由 GitHub API 确认是 gmertes/NflxMultiSubs。源码发布不等于 Developer ID 签名或 Apple 公证完成。
